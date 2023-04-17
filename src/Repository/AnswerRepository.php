@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Answer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -17,6 +18,31 @@ class AnswerRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Answer::class);
+    }
+
+    /**
+     * Static parce que
+     *  - c'est appelé dans l'entité et on ne peut pas instantier un service à l'intérieur
+     *  - on n'utilise pas the $this-> à l'interieur de cette méthode
+     * @return Criteria
+     */
+    public static function getQuestionApprovedCriteria(): Criteria
+    {
+        return Criteria::create()
+            ->andWhere(Criteria::expr()->eq('status', Answer::STATUS_APPROVED));
+    }
+
+    /**
+     * @param int $max
+     * @return Answer[]
+     */
+    public function findAMaxNumberOfApprovedAnswers(int $max = 10): array
+    {
+        return $this->createQueryBuilder('answer')
+            ->addCriteria(self::getQuestionApprovedCriteria())
+            ->setMaxResults($max)
+            ->getQuery()
+            ->getResult();
     }
 
     // /**

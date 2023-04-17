@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\QuestionRepository;
+use App\Repository\AnswerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
@@ -159,10 +159,11 @@ class Question
      */
     public function getApprovedAnswers(): Collection
     {
-        $criteria = Criteria::create()
-            ->andWhere(Criteria::expr()->eq('status', Answer::STATUS_APPROVED));
+        # Déplacé dans AnswerRepo
+        # $criteria = Criteria::create()
+        #     ->andWhere(Criteria::expr()->eq('status', Answer::STATUS_APPROVED));
 
-        return $this->answers->matching($criteria);
+        return $this->answers->matching(AnswerRepository::getQuestionApprovedCriteria());
 
         # Si juste qq lignes
         # return $this->answers->filter(function (Answer $answer) {
