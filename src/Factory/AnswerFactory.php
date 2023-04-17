@@ -36,6 +36,11 @@ final class AnswerFactory extends ModelFactory
         // TODO inject services if required (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services)
     }
 
+    public function needsApproval(): self
+    {
+        return $this->addState(['status' => Answer::STATUS_NEEDS_APPROVAL]);
+    }
+
     protected function getDefaults(): array
     {
         return [
@@ -46,6 +51,7 @@ final class AnswerFactory extends ModelFactory
             'createdAt' => self::faker()->dateTimeBetween('-1 year', 'yesterday'),
             # 'question' => QuestionFactory::random(),
             'question' => QuestionFactory::new()->unpublished(), #set to factory object, do not ->create()
+            'status' => Answer::STATUS_APPROVED,
         ];
     }
 
