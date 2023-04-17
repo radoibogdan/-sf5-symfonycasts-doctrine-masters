@@ -13,7 +13,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         # unpublished change les valeurs par défaut, c'est une méthode créée
-        QuestionFactory::createMany(20);
+        $questions = QuestionFactory::createMany(20);
         QuestionFactory::new()->unpublished()->many(5)->create();
 
         # Tous les réponses avec la même question
@@ -31,6 +31,10 @@ class AppFixtures extends Fixture
         # });
 
         # Tous les réponses avec question différente mais fait dans Answer factory
-        AnswerFactory::createMany(100);
+        AnswerFactory::createMany(100, function () use ($questions) {
+            return [
+                'question' => $questions[array_rand($questions)]
+            ];
+        });
     }
 }

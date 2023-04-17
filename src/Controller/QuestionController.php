@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Question;
+use App\Repository\AnswerRepository;
 use App\Repository\QuestionRepository;
 use App\Service\MarkdownHelper;
 use Doctrine\ORM\EntityManagerInterface;
@@ -68,11 +69,11 @@ class QuestionController extends AbstractController
 //            throw $this->createNotFoundException(sprintf("La question after le slug %s n'existe pas", $slug));
 //        }
 
-        $answers = [
-            'Make sure your cat is sitting `purrrfectly` still 🤣',
-            'Honestly, I like furry shoes better than MY cat',
-            'Maybe... try saying the spell backwards?',
-        ];
+        # Récupérer les Réponses en utilisant l'entité
+        # $answers = $answerRepository->findBy(['question' => $question]);
+
+        # Récupérer les Réponses
+        $answers = $question->getAnswers();
 
         return $this->render('question/show.html.twig', [
             'question' => $question,
