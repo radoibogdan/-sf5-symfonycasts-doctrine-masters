@@ -1,5 +1,7 @@
 {
     "devDependencies": {
+        "@hotwired/stimulus": "^3.2.1",
+        "@symfony/stimulus-bridge": "^3.2.2",
         "@symfony/webpack-encore": "^0.28.2",
         "bootstrap": "^4.4.1",
         "core-js": "^3.0.0",
@@ -14,5 +16,6 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
-    }
+    },
+    "dependencies": {}
 }
