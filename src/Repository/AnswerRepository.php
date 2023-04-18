@@ -55,6 +55,8 @@ class AnswerRepository extends ServiceEntityRepository
             ->addCriteria(self::getQuestionApprovedCriteria())
             ->orderBy('answer.votes', 'DESC')
             ->setMaxResults(10)
+            ->innerJoin('answer.question', 'question')
+            ->addSelect('question') # permet de corriger le problème N+1 (app_popular_answers fait un answer.* dans _answer.html.twig)
             ->getQuery()
             ->getResult();
     }
