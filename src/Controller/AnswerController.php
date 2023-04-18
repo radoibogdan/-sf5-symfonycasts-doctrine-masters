@@ -18,7 +18,7 @@ class AnswerController extends AbstractController
     public function popularAnswers(AnswerRepository $answerRepository, Request $request)
     {
         $answers = $answerRepository->findMostPopular(
-            $request->query->get('q')
+            $request->query->get('q') # quand le formulaire search est utilisé dans popularAnswers.html.twig
         );
 
         return $this->render('answer/popularAnswers.html.twig', [

@@ -49,14 +49,21 @@ class AnswerRepository extends ServiceEntityRepository
      * Trouver les 10 questions avec le plus de réponses
      * @return Answer[]
      */
-    public function findMostPopular() : array
+    public function findMostPopular(string $search = null) : array
     {
-        return $this->createQueryBuilder('answer')
+        $queryBuilder = $this->createQueryBuilder('answer')
             ->addCriteria(self::getQuestionApprovedCriteria())
             ->orderBy('answer.votes', 'DESC')
-            ->setMaxResults(10)
             ->innerJoin('answer.question', 'question')
-            ->addSelect('question') # permet de corriger le problème N+1 (app_popular_answers fait un answer.* dans _answer.html.twig)
+            ->addSelect('question'); # permet de corriger le problème N+1 (app_popular_answers fait un answer.* dans _answer.html.twig);
+
+        if ($search) {
+            $queryBuilder->andWhere('answer.content LIKE :search OR question.question LIKE :search')
+                ->setParameter('search', '%' . $search . '%');
+        }
+
+        return $queryBuilder
+            ->setMaxResults(10)
             ->getQuery()
             ->getResult();
     }
