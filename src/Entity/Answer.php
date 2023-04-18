@@ -97,6 +97,20 @@ class Answer
         return $this->question;
     }
 
+    /**
+     * Récupère le text de l'entité Question
+     *
+     * @return string
+     */
+    public function getQuestionText(): string
+    {
+        # Dans le cas où une A est créée mais pas encore sauvegardé en base, en théorie on pourrait faire un getQ
+        if (!$this->getQuestion()){
+           return '';
+        }
+        return (string) $this->getQuestion()->getQuestion();
+    }
+
     public function setQuestion(?Question $question): self
     {
         $this->question = $question;
