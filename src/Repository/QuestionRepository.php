@@ -28,7 +28,7 @@ class QuestionRepository extends ServiceEntityRepository
         return $this->addIsAskedQueryBuilder()
             ->orderBy('q.askedAt', 'DESC')
             ->leftJoin('q.tags', 'tag') # ManyToMany, tag = alias for the Tag Table
-            ->addSelect('tag')              # Fix N + 1 problem on homepage
+            ->addSelect('tag')              # Fix N + 1 problem on homepage, Select all data from Tag table
             ->getQuery()
             ->getResult()
         ;
