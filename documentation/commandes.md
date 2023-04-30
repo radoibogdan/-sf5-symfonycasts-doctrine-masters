@@ -69,7 +69,9 @@ $ symfony console make:factory
 [Faker Documentation][2]
 
 ## Stof Bundle
-[Documentation Stof][3]
+Pour utiliser Timestampable - updates date fields on create, update and even property change. 
+Voir entité Question ou on rajoute les colonnes createdAt, updatedAt avec `use TimestampableEntity;`  
+[Documentation Stof][3]  
 [Stof Symfony][4]
 
 ### Installation + config `stof_doctrine_extensions.yaml`
