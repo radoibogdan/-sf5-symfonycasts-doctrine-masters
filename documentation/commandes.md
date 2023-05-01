@@ -79,6 +79,11 @@ Voir entité Question ou on rajoute les colonnes createdAt, updatedAt avec `use 
 $ composer require stof/doctrine-extensions-bundle
 ```
 
+### ManyToMany table avec extra colonne = 2 x ManytoOne relations + extra colonne
+    - créer une entite QuestionTag et rajouter les propriétés
+        - question (relation ManyToOne)
+        - tag (relation ManyToOne)
+        - taggedAt (datetime_immutable)
 
 # Tests (pas sur ce projet)
 Jouer les tests (srs/tests):
