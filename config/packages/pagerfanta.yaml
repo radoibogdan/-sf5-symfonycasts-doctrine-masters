@@ -1,0 +1,7 @@
+# if you need your pagination links to be translated
+# babdev_pagerfanta:
+#     default_view: twig
+#     default_twig_template: '@BabDevPagerfanta/twitter_bootstrap5.html.twig'
+
+babdev_pagerfanta:
+    default_view: twitter_bootstrap5

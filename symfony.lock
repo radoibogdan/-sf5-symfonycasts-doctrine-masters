@@ -1,4 +1,7 @@
 {
+    "babdev/pagerfanta-bundle": {
+        "version": "v2.9.0"
+    },
     "behat/transliterator": {
         "version": "v1.5.0"
     },
@@ -144,6 +147,9 @@
     },
     "ocramius/package-versions": {
         "version": "1.4.2"
+    },
+    "pagerfanta/pagerfanta": {
+        "version": "v2.7.3"
     },
     "php": {
         "version": "7.2.5"

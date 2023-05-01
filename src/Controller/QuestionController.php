@@ -7,6 +7,8 @@ use App\Repository\AnswerRepository;
 use App\Repository\QuestionRepository;
 use App\Service\MarkdownHelper;
 use Doctrine\ORM\EntityManagerInterface;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,21 +28,43 @@ class QuestionController extends AbstractController
 
 
     /**
-     * @Route("/", name="app_homepage")
+     * Match uniquement les routes qui sont des chiffres ex: /2 /3
+     *
+     * @Route("/{page<\d+>}", name="app_homepage")
      */
-    public function homepage(QuestionRepository $questionRepository)
+    public function homepage(QuestionRepository $questionRepository, Request $request, int $page = 1)
     {
 //        $questions = $questionRepository->findBy(
 //            [], # get all
 //            ['askedAt' => 'DESC'] # order by column
 //        );
 
+        # With Paginator
         # Custom query
-        $questions = $questionRepository->findAllAskedOrderedByNewest();
+        $queryBuilder = $questionRepository->createAskedOrderedByNewestQueryBuilder();
+
+        $pagerFanta = new Pagerfanta(
+            new QueryAdapter($queryBuilder)
+        );
+        $pagerFanta->setMaxPerPage(5); // doit être avant le set current page
+
+        # Récupérer page depuis url
+        $pagerFanta->setCurrentPage($page);
+
+        # Récupérer page depuis Request
+        # $pagerFanta->setCurrentPage($request->query->get('page', 1)); #default 1 if no `?page=` in url
 
         return $this->render('question/homepage.html.twig', [
-            'questions' => $questions
+            'pager' => $pagerFanta
         ]);
+
+        # No Paginator
+        # Custom query
+        # $questions = $questionRepository->findAllAskedOrderedByNewest();
+        #
+        # return $this->render('question/homepage.html.twig', [
+        #     'questions' => $questions
+        # ]);
     }
 
 

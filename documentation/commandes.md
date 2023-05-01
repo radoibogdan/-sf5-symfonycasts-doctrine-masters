@@ -85,6 +85,20 @@ $ composer require stof/doctrine-extensions-bundle
         - tag (relation ManyToOne)
         - taggedAt (datetime_immutable)
 
+# Pagination
+Le choix entre deux modules : knpaginator et [Pagerfanta][6]
+[PagerFanta Docs][7]
+```bash
+$ composer require babdev/pagerfanta-bundle
+$ composer require pagerfanta/doctrine-orm-adapter 
+$ composer require pagerfanta/twig
+``` 
+
+#### Bootstrap template
+Create config file in `config/packages/pagerfanta.yaml` + cache clear
+
+
+
 # Tests (pas sur ce projet)
 Jouer les tests (srs/tests):
 
@@ -97,3 +111,5 @@ $ php bin/phpunit
 [3]: https://github.com/stof/StofDoctrineExtensionsBundle
 [4]: https://symfony.com/bundles/StofDoctrineExtensionsBundle/current/index.html
 [5]: https://docs.docker.com/desktop/install/windows-install/
+[6]: https://github.com/BabDev/PagerfantaBundle
+[7]: https://www.babdev.com/open-source/packages/pagerfanta/docs/3.x/installation
